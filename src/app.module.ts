@@ -7,8 +7,8 @@ import { UserModule } from './user/user.module';
 import { PostModule } from './postJobss/postjob.module';
 
 @Module({
-  imports: [
-    MongooseModule.forRoot('mongodb+srv://lorenc:lorenc11@database.8pvrmdz.mongodb.net/?retryWrites=true&w=majority'),
+  imports:[
+    MongooseModule.forRoot('put your own database here (:'),
     UserModule,
     AuthModule,
     PostModule
