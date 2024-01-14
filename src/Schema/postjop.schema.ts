@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
+import { User } from './auth.schema';
 
 export type PostDocument = PostJobs & Document;
 
@@ -7,8 +8,13 @@ export type PostDocument = PostJobs & Document;
 export class PostJobs { 
     @Prop()
     nameofthejob: string
-    @Prop()
-    author: string
+
+    @Prop({
+      type: mongoose.Schema.Types.ObjectId,
+      ref: User.name,
+    })
+    author: any;
+
     @Prop()
     loaction: string
     @Prop()

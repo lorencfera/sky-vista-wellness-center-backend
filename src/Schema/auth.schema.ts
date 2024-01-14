@@ -5,7 +5,7 @@ export type UserDocument = User & Document;
 
 @Schema()
 export class User {
-  @Prop()
+  @Prop({ unique: true })
   firstname: string;
 
   @Prop({ unique: true })
@@ -75,6 +75,9 @@ export class User {
   city: string;
   @Prop()
   zipcode: string;
+  
+  @Prop({ type: [String], default: [] })
+  savesJob: string[]
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

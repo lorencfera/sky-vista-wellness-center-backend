@@ -4,6 +4,7 @@ import { User, UserDocument } from 'src/Schema/auth.schema';
 import { Model } from 'mongoose';
 import { AuthUserDto } from './dtoss/auth.user.dto';
 import { UpdateUserDto } from './dtoss/update.dto';
+import { Types } from 'mongoose'
 @Injectable()
 export class UserService {
     constructor(
@@ -34,8 +35,8 @@ export class UserService {
           throw error;
         }
       }
-      
 
+    
       async findById(id: string): Promise<any> {
         try {
           const user = await this.UserModel.findById(id);
@@ -82,4 +83,47 @@ export class UserService {
           throw error;
         }
       }
+
+      async JobSave(userid: string, jobid: string) { 
+        try {
+          const user = await this.UserModel.findById(userid);
+      
+          if (!user) {
+            console.log(`User with ID ${jobid} not found.`);
+            return;
+          }
+      
+          if (!user.savesJob.includes(jobid)) {
+            await user.updateOne({ $push: { savesJob: jobid } });
+            console.log(`Job ${jobid} saved successfully for user ${user._id}`);
+          } else {
+            console.log(`Job ${jobid} is already saved for user ${user._id}`);
+          }
+        } catch (error) {
+          console.error(`Error saving job ${jobid}: ${error.message}`);
+        }
+      }
+      
+      
+
+      async getjob(userid: string) {
+        try {
+            const user = await this.UserModel.findById(userid);
+            
+    
+            if (!user) {
+                throw new Error(`User with ID ${userid} not found.`);
+            }
+    
+            console.log(`User savesJob: ${JSON.stringify(user.savesJob)}`);
+    
+            const jobs = await this.UserModel.find({ _id: { $in: user.savesJob } });
+            console.log(`Jobs: ${JSON.stringify(jobs)}`);
+
+            return user.savesJob;
+        } catch (error) {
+            console.error(`Error in getjob: ${error.message}`);
+            throw error;
+        }
+    }
 }

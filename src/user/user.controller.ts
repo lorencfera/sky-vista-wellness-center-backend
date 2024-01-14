@@ -18,4 +18,28 @@ export class UserController {
         
     }
 
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('JobSaves/:postId')
+  async PostJob(
+    @Param('postId') JobSaveId: string,
+    @Res() res: Response,
+    @Request() req,
+  ) {
+    try {
+      const result = await this.UserService.JobSave(req.user.id,JobSaveId);
+      res.status(201).json(result);
+      console.log(result)
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('JobSaves/:userId')
+  async GetJob(@Param('userId') userId: string) {
+    return this.UserService.getjob(userId);
+}
+
 }
