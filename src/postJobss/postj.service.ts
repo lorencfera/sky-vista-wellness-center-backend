@@ -52,4 +52,17 @@ export class PostService {
         throw error;
       }
   }
+
+  async deletePost(postId: string, userId: string) {
+    try {
+      const foundPost = await this.PostModel.findById(postId);
+      const deletedPost = await this.PostModel.findOneAndDelete({
+        _id: postId,
+        author: userId,
+      });
+      return deletedPost;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

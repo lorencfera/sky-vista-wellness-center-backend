@@ -126,4 +126,14 @@ export class UserService {
             throw error;
         }
     }
+
+    async getUsers(userIds: string[]): Promise<any[]> {
+      try {
+        const user = await this.UserModel.find()
+        .where('_id').sort({ createdAt: -1 }).exec();
+        return user;
+      } catch (error) {
+        throw error;
+      }
+    }
 }

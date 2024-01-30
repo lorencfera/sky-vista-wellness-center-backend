@@ -42,4 +42,11 @@ export class UserController {
     return this.UserService.getjob(userId);
 }
 
-}
+   @UseGuards(AuthGuard('jwt'))
+   @Get('userat')
+   async UsersInsync(@Request() req) { 
+    const user = await this.UserService.findById(req.user.id)
+     const users = await this.UserService.getUsers(user.id)
+     return users
+   }
+  }

@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res, UseGuards,Request, Get, Param } from "@nestjs/common";
+import { Body, Controller, Post, Res, UseGuards,Request, Get, Param, Delete } from "@nestjs/common";
 import { PostService } from "./postj.service";
 import { UserService } from "src/user/user.service";
 import { AuthGuard } from "@nestjs/passport";
@@ -56,6 +56,21 @@ export class PostController {
       const user = await this.userService.findById(req.user.id);
       const posts = await this.postService.GetUsersInHome(user.id);
       res.status(200).json(posts);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Delete('/:postId')
+  async deletePost(
+    @Res() res: Response,
+    @Request() req,
+    @Param('postId') postId: string,
+  ) {
+    try {
+      const newPost = await this.postService.deletePost(postId, req.user.id);
+      res.status(200).json(newPost);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
