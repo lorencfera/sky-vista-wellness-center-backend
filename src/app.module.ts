@@ -5,13 +5,15 @@ import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { PostModule } from './postJobss/postjob.module';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports:[
-    MongooseModule.forRoot('put your own database here (:'),
+    MongooseModule.forRoot('mongodb+srv://lorenc:lorenc11@database.8pvrmdz.mongodb.net/?retryWrites=true&w=majority'),
     UserModule,
     AuthModule,
-    PostModule
+    PostModule,
+    SearchModule
   ],
   controllers: [AppController],
   providers: [AppService],
