@@ -9,7 +9,7 @@ import { SearchModule } from './search/search.module';
 
 @Module({
   imports:[
-    MongooseModule.forRoot('mongodb+srv://lorenc:lorenc11@database.8pvrmdz.mongodb.net/?retryWrites=true&w=majority'),
+    MongooseModule.forRoot('your own database'),
     UserModule,
     AuthModule,
     PostModule,
